@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日本語プロンプト</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        #history {
+            width: 30%;
+            float: left;
+            border-right: 1px solid #ccc;
+            padding-right: 10px;
+        }
+        #prompt {
+            position: fixed;
+            bottom: 0;
+            width: 300px;
+            left: 0;
+            text-align: center;
+            padding: 10px;
+            background: #f9f9f9;
+            border-top: 1px solid #ccc;
+        }
+        #output {
+            margin-left: 40%;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="history">
+        <h3>履歴</h3>
+        <ul id="history-list"></ul>
+    </div>
+    <div id="output">
+        <h3>生成結果</h3>
+        <div id="response"></div>
+    </div>
+    <div id="prompt">
+        <input type="text" id="user-input" placeholder="何か入力してください">
+        <button onclick="sendPrompt()">送信</button>
+    </div>
+    <script>
+        async function sendPrompt() {
+            const input = document.getElementById("user-input").value;
+            const response = await fetch('/prompt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ input })
+            });
+            const data = await response.json();
+            document.getElementById("response").innerText = data.output;
+            const historyList = document.getElementById("history-list");
+            const listItem = document.createElement("li");
+            listItem.innerText = `質問: ${data.input}, 答え: ${data.output}`;
+            historyList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
