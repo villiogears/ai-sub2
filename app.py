@@ -66,11 +66,3 @@ def prompt():
 if __name__ == '__main__':
     app.run(debug=True)
 
-
-base_dir = "/home/manjaro/AI111"
-
-# 仮想環境のフォルダを指定
-venv_dir = os.path.join(base_dir, ".venv")
-os.path.join(base_dir, "templates")
-
-os.path.join("/usr/lib/libstdc++.so.6")
